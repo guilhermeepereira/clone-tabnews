@@ -1,6 +1,6 @@
 import useSWR from "swr";
 
-async function Fetch(key) {
+async function FetchAPI(key) {
   const response = await fetch(key);
   const responseBody = await response.json();
   return responseBody;
@@ -9,14 +9,14 @@ async function Fetch(key) {
 export default function StatusPage() {
   return (
     <>
-      <h2>Status:</h2>
+      <h2>Status dos Serviços:</h2>
       <ServicesStatus />
     </>
   );
 
   function ServicesStatus() {
-    const { data, isLoading } = useSWR("api/v1/status", Fetch, {
-      refreshInterval: 5000,
+    const { data, isLoading } = useSWR("api/v1/status", FetchAPI, {
+      refreshInterval: 3500,
     });
     function UpdatedAt() {
       let updated_at = "Carregando...";
@@ -33,7 +33,7 @@ export default function StatusPage() {
       );
     }
 
-    function Database() {
+    function DatabaseStatus() {
       let version = "Carregando...";
       let max_connections = "Carregando...";
       let opened_connections = "Carregando...";
@@ -56,6 +56,6 @@ export default function StatusPage() {
         </pre>
       );
     }
-    return [UpdatedAt(), Database()];
+    return [UpdatedAt(), DatabaseStatus()];
   }
 }
