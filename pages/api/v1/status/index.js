@@ -1,5 +1,17 @@
+import { createRouter } from "next-connect";
 import database from "infra/database.js";
-import { InternalServerError } from "infra/errors";
+import { InternalServerError, MethodNotAllowedError } from "infra/errors";
+
+const router = createRouter();
+router.get(status);
+export default router.handler({
+  onNoMatch: onNoMatch,
+});
+
+function onNoMatch(request, response) {
+  const publicError = new MethodNotAllowedError();
+  response.status(publicError.statusCode).json(publicError);
+}
 
 async function status(request, response) {
   try {
@@ -41,4 +53,3 @@ async function status(request, response) {
     response.status(500).json(publicErrorObject);
   }
 }
-export default status;
