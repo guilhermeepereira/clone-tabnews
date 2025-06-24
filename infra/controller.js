@@ -5,6 +5,7 @@ function onError(error, request, response) {
     cause: error,
   });
   response.status(publicError.statusCode).json(publicError);
+  console.log(error);
 }
 
 function onNoMatch(request, response) {
@@ -12,4 +13,9 @@ function onNoMatch(request, response) {
   response.status(publicMethodError.statusCode).json(publicMethodError);
 }
 
-export { onError, onNoMatch };
+const errorsHandler = {
+  onError: onError,
+  onNoMatch: onNoMatch,
+};
+
+export default errorsHandler;
