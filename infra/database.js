@@ -1,4 +1,5 @@
 import { Client } from "pg";
+import { ServiceError } from "./errors";
 
 async function query(queryObject) {
   let client;
@@ -8,9 +9,12 @@ async function query(queryObject) {
     const result = await client.query(queryObject);
     return result;
   } catch (error) {
-    console.log("\n Erro no Banco:");
-    console.log(error);
-    throw error;
+    const publicServiceErrorObject = new ServiceError({
+      cause: error,
+      message: "Erro na query ou na conexão com o banco.",
+      statusCode: 503,
+    });
+    throw publicServiceErrorObject;
   } finally {
     await client?.end();
   }
@@ -41,7 +45,6 @@ async function getNewClient() {
     password: process.env.POSTGRES_PASSWORD,
     ssl: getSSLValues(),
   });
-
-  await client.connect();
+  await client?.connect();
   return client;
 }

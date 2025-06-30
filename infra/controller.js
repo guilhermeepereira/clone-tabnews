@@ -1,16 +1,18 @@
 import { InternalServerError, MethodNotAllowedError } from "infra/errors";
 
 function onError(error, request, response) {
-  const publicError = new InternalServerError({
+  const publicOnErroObject = new InternalServerError({
     cause: error,
+    statusCode: error.statusCode || 500,
   });
-  response.status(publicError.statusCode).json(publicError);
-  console.log(error);
+  response.status(publicOnErroObject.statusCode).json(publicOnErroObject);
+  console.log("\nErro no controller: ");
+  console.log(publicOnErroObject);
 }
 
 function onNoMatch(request, response) {
-  const publicMethodError = new MethodNotAllowedError();
-  response.status(publicMethodError.statusCode).json(publicMethodError);
+  const publicOnNoMatchObject = new MethodNotAllowedError();
+  response.status(publicOnNoMatchObject.statusCode).json(publicOnNoMatchObject);
 }
 
 const errorsHandler = {
