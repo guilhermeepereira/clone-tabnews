@@ -12,7 +12,6 @@ async function query(queryObject) {
     const publicServiceErrorObject = new ServiceError({
       cause: error,
       message: "Erro na query ou na conexão com o banco.",
-      statusCode: 503,
     });
     throw publicServiceErrorObject;
   } finally {
