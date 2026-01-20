@@ -6,7 +6,6 @@ function onError(error, request, response) {
     statusCode: error.statusCode || 500,
   });
   response.status(publicOnErroObject.statusCode).json(publicOnErroObject);
-  console.log("\nErro no controller: ");
   console.log(publicOnErroObject);
 }
 
