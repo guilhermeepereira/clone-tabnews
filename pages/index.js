@@ -1,5 +1,10 @@
 function Home() {
-  return <h1>Blog informativo para quem trabalha com tecnologia!!</h1>;
+  return (
+    <h1>
+      Maria Clara, São Guilherme ama você👼🏾. Se você ama ele também dá uma
+      risadinha😍...
+    </h1>
+  );
 }
 
 export default Home;
